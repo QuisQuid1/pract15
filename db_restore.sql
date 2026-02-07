@@ -1,5 +1,3 @@
--- Скрипт восстановления БД для проекта WPF + EF Core (Database-First)
--- Создано на основании файла 'Данные для импорта(1).xlsx'
 
 IF DB_ID(N'electronics_store_db') IS NULL
     CREATE DATABASE [electronics_store_db];

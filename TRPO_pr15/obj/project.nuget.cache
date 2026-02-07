@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QV3JcI1Z97w=",
+  "dgSpecHash": "U45a8yU5dvA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Katana_NB\\Desktop\\TRPO_pr15_1\\TRPO_pr15\\TRPO_pr15.csproj",
+  "projectFilePath": "C:\\Users\\Katana_NB\\Desktop\\TRPO_pract15\\TRPO_pr15\\TRPO_pr15.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Katana_NB\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Katana_NB\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

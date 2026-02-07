@@ -48,6 +48,8 @@ namespace TRPO_pr15.Pages
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             service.ResetFilter();
+            service.brandName = PriceLow.Text= PriceHigh.Text=CategoryName.Text=BrandName.Text= string.Empty;
+            service.productsView.Refresh();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
