@@ -1,0 +1,161 @@
+<Page x:Class="TRPO_pr15.Pages.ProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:validation="clr-namespace:TRPO_pr15.Validations"
+      xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Продукты">
+
+    <Grid Background="#dfeaeb">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Добавление/редактирование товара" 
+                   FontSize="24" 
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="10"/>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Border Background="White"
+                    CornerRadius="5"
+                    Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label VerticalAlignment="Center">Название:</Label>
+                    <TextBox x:Name="Name" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="_product.Name" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:EmptyValidation/>
+                                    <validation:MaxLengthValidation MaxLength="200"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="1" VerticalAlignment="Center">Цена:</Label>
+                    <TextBox x:Name="Price" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBox.Text>
+                            <Binding Path="_product.Price" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:EmptyValidation/>
+                                    <validation:DecimalValidation MinValue="0"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="2" VerticalAlignment="Center">Остаток:</Label>
+                    <TextBox x:Name="Stock" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1">
+                        <TextBox.Text>
+                            <Binding Path="_product.Stock" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:IntValidation MinValue="0"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="3" VerticalAlignment="Center">Рейтинг:</Label>
+                    <TextBox x:Name="Rating" Grid.Row="3" VerticalAlignment="Center" Grid.Column="1">
+                        <TextBox.Text>
+                            <Binding Path="_product.Rating" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:RatingValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="4">Бренд:</Label>
+                    <ComboBox Grid.Row="4" VerticalAlignment="Center"
+                              x:Name="brands" 
+                              ItemsSource="{Binding _brandService.Brands}"
+                              Grid.Column="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.SelectedItem>
+                            <Binding Path="_product.Brand" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:SelectionRequiredValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="5">Категория:</Label>
+                    <ComboBox Grid.Row="5" VerticalAlignment="Center"
+                              x:Name="categories" 
+                              ItemsSource="{Binding _categoryService.Categories}"
+                              Grid.Column="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        <ComboBox.SelectedItem>
+                            <Binding Path="_product.Category" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:SelectionRequiredValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </ComboBox.SelectedItem>
+                    </ComboBox>
+
+                    <Label Grid.Row="6">Описание:</Label>
+                    <TextBox x:Name="Description" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap">
+                        <TextBox.Text>
+                            <Binding Path="_product.Description" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:EmptyValidation/>
+                                    <validation:MaxLengthValidation MaxLength="1000"/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <Label Grid.Row="7" VerticalAlignment="Center">Дата добавления:</Label>
+                    <DatePicker Name="DatePicker" Grid.Row="7" VerticalAlignment="Center" Grid.Column="1">
+                        <DatePicker.SelectedDate>
+                            <Binding Path="_product.CreatedAt" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validation:DateNotFutureValidation/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
+
+                    <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Click="SaveButton_Click">Сохранить</Button>
+                        <Button Click="BackButton_Click">Назад</Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

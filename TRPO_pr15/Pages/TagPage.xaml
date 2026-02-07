@@ -1,0 +1,135 @@
+﻿<Page x:Class="TRPO_pr15.Pages.TagPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:TRPO_pr15.Pages"
+      xmlns:validation="clr-namespace:TRPO_pr15.Validations"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Теги">
+
+    <Grid Background="#dfeaeb">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10">Теги</Label>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Background="White"
+                    CornerRadius="5"
+                    Padding="15"
+                    Margin="0,0,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <Label FontWeight="Bold">Добавление/редактирование тегов</Label>
+                        <StackPanel Orientation="Horizontal">
+                            <Label VerticalAlignment="Center">Название:</Label>
+                            <TextBox x:Name="Name" Grid.Column="1" VerticalAlignment="Center">
+                                <TextBox.Text>
+                                    <Binding Path ="TextBoxTag.Name">
+                                        <Binding.ValidationRules>
+                                            <validation:EmptyValidation/>
+                                    <validation:MaxLengthValidation MaxLength="50"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Click="AddButton_Click" Margin="2" >Добавить</Button>
+                            <Button Click="RemoveButton_Click" Margin="2" >Удалить</Button>
+                            <Button Click="EditButton_Click" Margin="2" >Редактировать</Button>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <Label FontWeight="Bold">Теги и товары</Label>
+                        <Label>Выберите товар:</Label>
+                    </StackPanel>
+
+                    <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3">
+                        <MaterialDesign:ColorZone Mode="SecondaryMid" Padding="5">
+                            <ListView ItemsSource="{Binding _productService.Products}" 
+                                      SelectedItem="{Binding SelectedProduct}"
+                                      SelectionChanged="ListView_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}"
+FontWeight="Bold" 
+FontSize="16"
+Foreground="Black"/>
+                                            <ItemsControl ItemsSource="{Binding Tags}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Margin="0,0,5,0">
+                                                            <Run Text="#"/>
+                                                            <Run Text="{Binding Name}"/>
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </MaterialDesign:ColorZone>
+                    </Border>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Click="AddProductTagButton_Click" Margin="5" Width="170">Добавить тег товару</Button>
+                        <Button Click="RemoveProductTagButton_Click" Margin="5" Width="170">Удалить тег товара</Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Background="White"
+                    CornerRadius="5">
+                <StackPanel>
+                    <StackPanel>
+                        <Label FontWeight="Bold">Список тегов</Label>
+                        <MaterialDesign:ColorZone Mode="SecondaryMid">
+                            <ListView x:Name="ProductsList" 
+                                     ItemsSource="{Binding _tagService.Tags}" 
+                                     SelectedItem="{Binding SelectedTag, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ListView_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </MaterialDesign:ColorZone>
+                    </StackPanel>
+
+                    <Button Grid.Row="1"
+                            Click="BackButton_Click"
+                            HorizontalAlignment="Right">Назад</Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>
